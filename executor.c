@@ -15,12 +15,6 @@ int	execute_cmd(char **args)
 	if (!args || args[0] == NULL)
 		return (0);
 
-	if (args[1] != NULL)
-	{
-		fprintf(stderr, "./shell: No such file or directory\n");
-		return (-1);
-	}
-
 	pid = fork();
 	if (pid == -1)
 	{
