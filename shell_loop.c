@@ -3,6 +3,7 @@
 
 /**
 * shell_loop - Main loop of the shell program
+* @program_name: Name of the program (argv[0])
 *
 * Description: Continuously reads user input and processes commands
 * in an infinite loop until the program is terminated.
@@ -10,11 +11,11 @@
 * Return: Always 0 (Success)
 */
 
-int shell_loop(void)
+int shell_loop(char *program_name)
 {
 	char *input;
 	char **tokens;
-	int exec_status;
+	int exec_status = 0;
 
 	while (1)
 	{
@@ -38,8 +39,7 @@ int shell_loop(void)
 			continue;
 		}
 
-		exec_status = execute_cmd(tokens);
-		(void)exec_status; /* Suppress unused variable warning */
+		exec_status = execute_cmd(program_name, tokens);
 
 		free(tokens);
 		free(input);
@@ -47,5 +47,5 @@ int shell_loop(void)
 		input = NULL;
 	}
 
-	return (0);
+	return (exec_status);
 }

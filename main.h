@@ -14,12 +14,18 @@ extern char **environ;
 #include <ctype.h>
 
 /* Function prototypes */
-int shell_loop(void);
+int shell_loop(char *program_name);
 char *read_input(void);
 char **parse_input(char *input);
-int execute_cmd(char **args);
+int execute_cmd(char *program_name, char **args);
 char *find_command_path(char *command);
-int is_command_executable(char *command);
+
+
+/* Utility function prototypes */
 char *trim_whitespace(char *str);
+int string_length(const char *str);
+char *string_duplicate(const char *str);
+char *string_copy(char *dest, const char *src);
+char *string_concat(char *dest, const char *src);
 
 #endif /* MAIN_H */

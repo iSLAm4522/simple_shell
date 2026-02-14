@@ -2,11 +2,13 @@
 
 /**
 * main - Entry point of the shell program
+* @argc: Argument count
+* @argv: Argument vector
 *
 * Return: Always 0 (Success)
 */
-int main(void)
+int main(int argc, char **argv)
 {
-	shell_loop();
-	return (0);
+	(void)argc; /* Unused parameter */
+	return (shell_loop(argv[0]));
 }
