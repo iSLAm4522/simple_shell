@@ -1,5 +1,8 @@
 #include "main.h"
 
+/* Global variable for last exit status */
+int last_exit_status = 0;
+
 
 /**
 * shell_loop - Main loop of the shell program
@@ -58,6 +61,7 @@ int shell_loop(char *program_name)
 			free(tokens);
 			free(input);
 		}
+		last_exit_status = exec_status;
 		tokens = NULL;
 		input = NULL;
 	}

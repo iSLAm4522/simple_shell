@@ -7,6 +7,6 @@
  */
 int builtin_exit_shell(void)
 {
-	exit(EXIT_SUCCESS);
+	exit(last_exit_status);
 	return (0);
 }

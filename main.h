@@ -2,6 +2,7 @@
 #define MAIN_H
 
 extern char **environ;
+extern int last_exit_status;
 
 /* Define a constant for command not found error code */
 #define INITIAL_TOKENS 10
