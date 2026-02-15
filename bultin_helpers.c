@@ -3,12 +3,14 @@
 static char *builtin_commands[] = {
 
 	"exit",
+	"env",
 	NULL
 };
 
 static int (*builtin_functions[])(void) = {
 
 	builtin_exit_shell,
+	builtin_env,
 	NULL
 };
 

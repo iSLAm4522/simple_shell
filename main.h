@@ -31,6 +31,7 @@ int execute_builtin_command(int idx);
 
 /* Header file for builtins */
 int builtin_exit_shell(void);
+int builtin_env(void);
 
 
 /* Header file for utils */
