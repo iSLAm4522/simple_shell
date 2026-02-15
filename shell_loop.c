@@ -16,6 +16,7 @@ int shell_loop(char *program_name)
 	char *input;
 	char **tokens;
 	int exec_status = 0;
+	int builtin_idx;
 
 	while (1)
 	{
@@ -39,7 +40,11 @@ int shell_loop(char *program_name)
 			continue;
 		}
 
-		exec_status = execute_cmd(program_name, tokens);
+		builtin_idx = is_builtin_command(tokens[0]);
+		if (builtin_idx >= 0)
+			exec_status = execute_builtin_command(builtin_idx);
+		else
+			exec_status = execute_cmd(program_name, tokens);
 
 		free(tokens);
 		free(input);

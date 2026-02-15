@@ -1,6 +1,5 @@
 #include "main.h"
 
-#define INITIAL_TOKENS 10
 
 /**
 * parse_input - Tokenizes the input string into an array of tokens

@@ -21,7 +21,7 @@ int	execute_cmd(char *program_name, char **args)
 	if (cmd_path == NULL)
 	{
 		fprintf(stderr, "%s: 1: %s: not found\n", program_name, args[0]);
-		return (127);
+		return (CMD_NOT_FOUND);
 	}
 
 	pid = fork();
@@ -35,8 +35,7 @@ int	execute_cmd(char *program_name, char **args)
 	{
 		if (execve(cmd_path, args, environ) == -1)
 		{
-			perror("./shell");
-			free(cmd_path);
+			perror(program_name);
 			exit(EXIT_FAILURE);
 		}
 	}
