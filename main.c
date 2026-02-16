@@ -1,5 +1,4 @@
 #include "main.h"
-
 /**
 * main - Entry point of the shell program
 * @argc: Argument count
@@ -9,6 +8,12 @@
 */
 int main(int argc, char **argv)
 {
+	shell_context_t ctx;
+	int result;
 	(void)argc; /* Unused parameter */
-	return (shell_loop(argv[0]));
+
+	ctx.program_name = argv[0];
+	ctx.last_exit_status = 0;
+	result = shell_loop(&ctx);
+	return (result);
 }

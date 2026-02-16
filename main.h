@@ -1,12 +1,24 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+/* Global variables */
 extern char **environ;
-extern int last_exit_status;
 
 /* Define a constant for command not found error code */
 #define INITIAL_TOKENS 10
 #define CMD_NOT_FOUND 127
+#define EXIT_ILLEGAL_NUMBER 2
+
+/**
+ * struct shell_context - Structure to hold shell state and configuration
+ * @program_name: Name of the shell program
+ * @last_exit_status: Exit status of the last executed command
+ */
+typedef struct shell_context
+{
+	char *program_name;
+	int last_exit_status;
+} shell_context_t;
 
 /* Header file for main.c */
 #include <stdio.h>
@@ -19,23 +31,24 @@ extern int last_exit_status;
 #include <ctype.h>
 
 /* Function prototypes */
-int shell_loop(char *program_name);
+int shell_loop(shell_context_t *ctx);
 char *read_input(void);
 char **parse_input(char *input);
-int execute_cmd(char *program_name, char **args);
+int execute_cmd(shell_context_t *ctx, char **args);
 char *find_command_path(char *command);
 
 /* Header file for helpers */
 int is_builtin_command(char *command);
-int execute_builtin_command(int idx, char **args, char *input);
+int execute_builtin_command(shell_context_t *ctx, int idx, char **args,
+char *input);
 
 /* Header file for builtins */
-int builtin_exit_shell(char **args, char *input);
-int builtin_env(char **args, char *input);
-
+int builtin_exit_shell(shell_context_t *ctx, char **args, char *input);
+int builtin_env(shell_context_t *ctx, char **args, char *input);
 
 /* Header file for utils */
 char *trim_whitespace(char *str);
+int string_to_int(char *str, char **endptr);
 
 /* String utility function prototypes */
 int string_length(const char *str);

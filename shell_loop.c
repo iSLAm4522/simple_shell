@@ -1,12 +1,8 @@
 #include "main.h"
 
-/* Global variable for last exit status */
-int last_exit_status = 0;
-
-
 /**
 * shell_loop - Main loop of the shell program
-* @program_name: Name of the program (argv[0])
+* @ctx: Pointer to shell context containing program name and exit status
 *
 * Description: Continuously reads user input and processes commands
 * in an infinite loop until the program is terminated.
@@ -14,7 +10,7 @@ int last_exit_status = 0;
 * Return: Always 0 (Success)
 */
 
-int shell_loop(char *program_name)
+int shell_loop(shell_context_t *ctx)
 {
 	char *input;
 	char **tokens;
@@ -46,12 +42,12 @@ int shell_loop(char *program_name)
 		builtin_idx = is_builtin_command(tokens[0]);
 		if (builtin_idx >= 0)
 		{
-			exec_status = execute_builtin_command(builtin_idx, tokens, input);
+			exec_status = execute_builtin_command(ctx, builtin_idx, tokens, input);
 		}
 		else
-			exec_status = execute_cmd(program_name, tokens);
+			exec_status = execute_cmd(ctx, tokens);
 
-		last_exit_status = exec_status;
+		ctx->last_exit_status = exec_status;
 		free(tokens);
 		free(input);
 		tokens = NULL;

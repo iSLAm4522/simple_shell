@@ -50,3 +50,53 @@ char *trim_whitespace(char *str)
 	}
 	return (str);
 }
+
+/**
+* string_to_int - Converts a string to an integer
+* @str: The string to convert
+* @endptr: Pointer to store the end of the converted string
+*
+* Return: The integer value of the string
+*/
+int string_to_int(char *str, char **endptr)
+{
+	int res = 0;
+	int sign = 1;
+
+	if (!str)
+	{
+		if (endptr)
+			*endptr = str;
+		return (0);
+	}
+
+	while (*str == ' ' || *str == '\t')
+		str++;
+
+	if (*str == '-')
+	{
+		sign = -1;
+		str++;
+	}
+	else if (*str == '+')
+	{
+		str++;
+	}
+
+	if (*str < '0' || *str > '9')
+	{
+		if (endptr)
+			*endptr = str;
+		return (0);
+	}
+
+	while (*str >= '0' && *str <= '9')
+	{
+		res = res * 10 + (*str - '0');
+		str++;
+	}
+
+	if (endptr)
+		*endptr = str;
+	return (sign * res);
+}
