@@ -46,22 +46,14 @@ int shell_loop(char *program_name)
 		builtin_idx = is_builtin_command(tokens[0]);
 		if (builtin_idx >= 0)
 		{
-			if (builtin_idx == 0) /* exit */
-			{
-				free(tokens);
-				free(input);
-			}
-			exec_status = execute_builtin_command(builtin_idx);
+			exec_status = execute_builtin_command(builtin_idx, tokens, input);
 		}
 		else
 			exec_status = execute_cmd(program_name, tokens);
 
-		if (builtin_idx != 0)
-		{
-			free(tokens);
-			free(input);
-		}
 		last_exit_status = exec_status;
+		free(tokens);
+		free(input);
 		tokens = NULL;
 		input = NULL;
 	}

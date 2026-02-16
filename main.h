@@ -27,11 +27,11 @@ char *find_command_path(char *command);
 
 /* Header file for helpers */
 int is_builtin_command(char *command);
-int execute_builtin_command(int idx);
+int execute_builtin_command(int idx, char **args, char *input);
 
 /* Header file for builtins */
-int builtin_exit_shell(void);
-int builtin_env(void);
+int builtin_exit_shell(char **args, char *input);
+int builtin_env(char **args, char *input);
 
 
 /* Header file for utils */

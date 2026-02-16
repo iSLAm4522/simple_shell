@@ -7,7 +7,7 @@ static char *builtin_commands[] = {
 	NULL
 };
 
-static int (*builtin_functions[])(void) = {
+static int (*builtin_functions[])(char **args, char *input) = {
 
 	builtin_exit_shell,
 	builtin_env,
@@ -37,14 +37,16 @@ int is_builtin_command(char *command)
 /**
 * execute_builtin_command - Execute a builtin command
 * @idx: The index of the builtin command to execute
+* @args: The arguments for the builtin command
+* @input: The input string
 *
 * Return: The return value of the builtin function, or -1 if not a builtin
 */
-int execute_builtin_command(int idx)
+int execute_builtin_command(int idx, char **args, char *input)
 {
 	int max_idx = (sizeof(builtin_functions) / sizeof(builtin_functions[0])) - 1;
 
 	if (idx < 0 || idx >= max_idx)
 		return (-1);
-	return (builtin_functions[idx]());
+	return (builtin_functions[idx](args, input));
 }
