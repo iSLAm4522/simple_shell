@@ -14,7 +14,8 @@ int main(int argc, char **argv)
 
 	ctx.program_name = argv[0];
 	ctx.last_exit_status = 0;
+	ctx.my_environ = NULL;
 	result = shell_loop(&ctx);
-	free_my_environ();
+	free_my_environ(&ctx);
 	return (result);
 }

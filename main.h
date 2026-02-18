@@ -13,11 +13,13 @@ extern char **environ;
  * struct shell_context - Structure to hold shell state and configuration
  * @program_name: Name of the shell program
  * @last_exit_status: Exit status of the last executed command
+ * @my_environ: Custom environment array
  */
 typedef struct shell_context
 {
 	char *program_name;
 	int last_exit_status;
+	char **my_environ;
 } shell_context_t;
 
 /* Header file for main.c */
@@ -37,17 +39,19 @@ char **parse_input(char *input);
 int execute_cmd(shell_context_t *ctx, char **args);
 char *find_command_path(char *command);
 
-/* Header file for helpers */
+/* Header file for builtins helpers */
 int is_builtin_command(char *command);
 int execute_builtin_command(shell_context_t *ctx, int idx, char **args,
 char *input);
+char *get_pwd(void);
 
 /* Header file for builtins */
 int builtin_exit_shell(shell_context_t *ctx, char **args, char *input);
 int builtin_env(shell_context_t *ctx, char **args, char *input);
 int builtin_setenv(shell_context_t *ctx, char **args, char *input);
 int builtin_unsetenv(shell_context_t *ctx, char **args, char *input);
-void free_my_environ(void);
+int builtin_pwd(shell_context_t *ctx, char **args, char *input);
+void free_my_environ(shell_context_t *ctx);
 
 /* Header file for utils */
 char *trim_whitespace(char *str);
