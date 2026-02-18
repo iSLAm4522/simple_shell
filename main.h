@@ -47,6 +47,7 @@ int builtin_exit_shell(shell_context_t *ctx, char **args, char *input);
 int builtin_env(shell_context_t *ctx, char **args, char *input);
 int builtin_setenv(shell_context_t *ctx, char **args, char *input);
 int builtin_unsetenv(shell_context_t *ctx, char **args, char *input);
+void free_my_environ(void);
 
 /* Header file for utils */
 char *trim_whitespace(char *str);

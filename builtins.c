@@ -38,7 +38,7 @@ static char **copy_environ(void)
 /**
  * free_my_environ - Frees the custom environment array
  */
-static void free_my_environ(void)
+void free_my_environ(void)
 {
 	int i;
 
