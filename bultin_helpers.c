@@ -4,6 +4,8 @@ static char *builtin_commands[] = {
 
 	"exit",
 	"env",
+	"setenv",
+	"unsetenv",
 	NULL
 };
 
@@ -12,6 +14,8 @@ static int (*builtin_functions[])(shell_context_t *ctx, char **args,
 
 	builtin_exit_shell,
 	builtin_env,
+	builtin_setenv,
+	builtin_unsetenv,
 	NULL
 };
 
