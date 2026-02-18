@@ -279,7 +279,7 @@ int builtin_unsetenv(shell_context_t *ctx, char **args, char *input)
 
 int builtin_pwd(shell_context_t *ctx, char **args, char *input)
 {
-	char *cwd = get_pwd();
+	char *cwd = get_cwd();
 	(void)args;
 	(void)input;
 
@@ -291,5 +291,88 @@ int builtin_pwd(shell_context_t *ctx, char **args, char *input)
 	}
 	printf("%s\n", cwd);
 	free(cwd);
+	return (0);
+}
+
+/**
+* builtin_cd - Change the current working directory
+* @ctx: Pointer to shell context
+* @args: The arguments (args[1] = directory path)
+* @input: The input string (unused)
+*
+* Return: 0 on success, 1 on failure
+*/
+int builtin_cd(shell_context_t *ctx, char **args, char *input)
+{
+	char *dir;
+	char *oldpwd = NULL;
+	char *pwd  = NULL;
+
+	(void)input;
+
+	oldpwd = get_env_var("PWD");
+	if (oldpwd)
+		oldpwd = string_duplicate(oldpwd);
+	
+	if (!args[1])
+	{
+		dir = get_env_var("HOME");
+		if (!dir)
+		{
+			if (oldpwd)
+				free(oldpwd);
+			return (0);
+		}
+	}
+	else if (string_compare(args[1], "-") == 0)
+	{
+		dir = get_env_var("OLDPWD");
+		if (!dir)
+		{
+			dir = get_env_var("PWD");
+			if (dir)
+				printf("%s\n", dir);
+			if (oldpwd)
+				free(oldpwd);
+			return (0);
+		}
+		printf("%s\n", dir);
+	}
+	else
+		dir = args[1];
+
+	if (chdir(dir) == -1)
+	{
+		fprintf(stderr, "%s: 1: cd: can't cd to %s\n", ctx->program_name, dir);
+		if (oldpwd)
+			free(oldpwd);
+		return (1);
+	}
+
+	pwd = get_cwd();
+	if (pwd)
+	{
+		/* Update PWD and OLDPWD in custom environment */
+		char *pwd_args[4];
+		char *oldpwd_args[4];
+
+		pwd_args[0] = "setenv";
+		pwd_args[1] = "PWD";
+		pwd_args[2] = pwd;
+		pwd_args[3] = NULL;
+
+		builtin_setenv(ctx, pwd_args, NULL);
+		if (oldpwd)
+		{
+			oldpwd_args[0] = "setenv";
+			oldpwd_args[1] = "OLDPWD";
+			oldpwd_args[2] = oldpwd;
+			oldpwd_args[3] = NULL;
+			builtin_setenv(ctx, oldpwd_args, NULL);
+		}
+		free(pwd);
+	}
+	if (oldpwd)
+		free(oldpwd);
 	return (0);
 }

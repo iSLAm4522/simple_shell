@@ -43,7 +43,7 @@ char *find_command_path(char *command);
 int is_builtin_command(char *command);
 int execute_builtin_command(shell_context_t *ctx, int idx, char **args,
 char *input);
-char *get_pwd(void);
+char *get_cwd(void);
 
 /* Header file for builtins */
 int builtin_exit_shell(shell_context_t *ctx, char **args, char *input);
@@ -51,11 +51,13 @@ int builtin_env(shell_context_t *ctx, char **args, char *input);
 int builtin_setenv(shell_context_t *ctx, char **args, char *input);
 int builtin_unsetenv(shell_context_t *ctx, char **args, char *input);
 int builtin_pwd(shell_context_t *ctx, char **args, char *input);
+int builtin_cd(shell_context_t *ctx, char **args, char *input);
 void free_my_environ(shell_context_t *ctx);
 
 /* Header file for utils */
 char *trim_whitespace(char *str);
 int string_to_int(char *str, char **endptr);
+char *get_env_var(const char *name);
 
 /* String utility function prototypes */
 int string_length(const char *str);

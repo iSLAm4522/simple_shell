@@ -7,6 +7,7 @@ static char *builtin_commands[] = {
 	"setenv",
 	"unsetenv",
 	"pwd",
+	"cd",
 	NULL
 };
 
@@ -18,6 +19,7 @@ static int (*builtin_functions[])(shell_context_t *ctx, char **args,
 	builtin_setenv,
 	builtin_unsetenv,
 	builtin_pwd,
+	builtin_cd,
 	NULL
 };
 
@@ -61,10 +63,10 @@ int execute_builtin_command(shell_context_t *ctx, int idx, char **args,
 }
 
 /**
-* get_pwd - Get the current working directory
+* get_cwd - Get the current working directory
 * Return: The current working directory, or NULL on failure
 */
-char *get_pwd(void)
+char *get_cwd(void)
 {
 	char *cwd = getcwd(NULL, 0);
 
